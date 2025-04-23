@@ -197,9 +197,37 @@
     [tableView reloadData];
 }
 
+- (void)removeTaskAtIndexPath:(NSIndexPath*)indexPath {
+    Task* task = tasksBySection[indexPath.section][indexPath.row];
+    
+    [tasksRepository removeTask:task];
+    [tasksBySection[indexPath.section] removeObjectAtIndex:indexPath.row];
+    
+    if (tasksBySection[indexPath.section].count == 0) {
+        [sections removeObjectAtIndex:indexPath.section];
+        [tasksBySection removeObjectAtIndex:indexPath.section];
+        
+        [tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
+    } else {
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [_delegate tableManagerOnSelectTask:tasksBySection[indexPath.section][indexPath.row]];
+}
+
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+    Task* task = tasksBySection[indexPath.section][indexPath.row];
+    
+    UIContextualAction* deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        [self removeTaskAtIndexPath:indexPath];
+    }];
+    
+    deleteAction.image = [UIImage systemImageNamed:@"trash"];
+    
+    return [UISwipeActionsConfiguration configurationWithActions:@[deleteAction]];
 }
 
 @end
