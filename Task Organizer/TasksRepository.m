@@ -30,7 +30,8 @@
 
 - (void)loadTasks {
     NSData* data = [defaults objectForKey:@"tasks"];
-    NSArray* unarchived = [NSKeyedUnarchiver unarchivedArrayOfObjectsOfClass:[Task class] fromData:data error:nil];
+    
+    NSArray<Task*>* unarchived = [NSKeyedUnarchiver unarchivedObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [Task class], [NSString class]]] fromData:data error:nil];
     
     if (unarchived == nil) {
         _tasks = [NSMutableArray array];
@@ -40,7 +41,8 @@
 }
 
 - (void)saveTasks {
-    NSData* data = [NSKeyedArchiver archivedDataWithRootObject:_tasks requiringSecureCoding:NO error:nil];
+    NSData* data = [NSKeyedArchiver archivedDataWithRootObject:_tasks requiringSecureCoding:YES error:nil];
+    
     if (data != nil) {
         [defaults setObject:data forKey:@"tasks"];
     }

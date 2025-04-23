@@ -20,6 +20,10 @@
 
 @implementation Task
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (instancetype)taskWithTitle:(NSString*)title content:(NSString*)content dueDate:(NSDate*)dueDate status:(enum Status)status priority:(enum Priority)priority {
     Task* task = [[Task alloc] init];
     

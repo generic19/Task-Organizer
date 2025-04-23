@@ -11,8 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 enum Status {
     StatusPending = 1,
-    StatusInProgress,
-    StatusCompleted,
+    StatusInProgress = 2,
+    StatusCompleted = 4,
 };
 
 enum Priority {
@@ -21,7 +21,7 @@ enum Priority {
     PriorityHigh,
 };
 
-@interface Task : NSObject <NSCoding, NSCopying>
+@interface Task : NSObject <NSCoding, NSSecureCoding, NSCopying>
 
 @property (readonly) NSString* title;
 @property (readonly) NSString* content;
@@ -29,6 +29,8 @@ enum Priority {
 @property (readonly) NSDate* dueDate;
 @property (readonly) enum Status status;
 @property (readonly) enum Priority priority;
+
+@property (class, readonly) BOOL supportsSecureCoding;
 
 + (instancetype)taskWithTitle:(NSString*)title content:(NSString*)content dueDate:(NSDate*)dueDate status:(enum Status)status priority:(enum Priority)priority;
 
