@@ -5,17 +5,17 @@
 //  Created by Basel Alasadi on 23/04/2025.
 //
 
-#import "AllTasksViewController.h"
+#import "PendingTasksViewController.h"
 #import "TasksTableManager.h"
 #import "TaskDetailViewController.h"
 
-@interface AllTasksViewController ()
+@interface PendingTasksViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
-@implementation AllTasksViewController {
+@implementation PendingTasksViewController {
     TasksRepository* repository;
     TasksTableManager* tableManager;
 }
@@ -25,12 +25,16 @@
     
     repository = [TasksRepository instance];
     
-    tableManager = [TasksTableManager managerForDelegate:self tableView:_tableView repository:repository groupByPriority:YES sorting:SortByDueDate statusFilter:STATUS_ALL];
+    tableManager = [TasksTableManager managerForDelegate:self tableView:_tableView repository:repository groupByPriority:YES sorting:SortByDueDate statusFilter:StatusPending];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     tableManager.titleFilter = searchText;
     [tableManager reload];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

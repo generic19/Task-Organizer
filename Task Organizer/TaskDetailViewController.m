@@ -34,7 +34,10 @@
         self.editing = YES;
         
         _scPriority.selectedSegmentIndex = 1;
+        
         _scStatus.selectedSegmentIndex = 0;
+        [_scStatus setEnabled:NO forSegmentAtIndex:1];
+        [_scStatus setEnabled:NO forSegmentAtIndex:2];
     } else {
         self.editing = NO;
         
@@ -62,10 +65,14 @@
                 
             case StatusInProgress:
                 _scStatus.selectedSegmentIndex = 1;
+                [_scStatus setEnabled:NO forSegmentAtIndex:0];
                 break;
                 
             case StatusCompleted:
                 _scStatus.selectedSegmentIndex = 2;
+                [_scStatus setEnabled:NO forSegmentAtIndex:0];
+                [_scStatus setEnabled:NO forSegmentAtIndex:1];
+                _btnEditOrSave.enabled = NO;
                 break;
         }
         
@@ -87,6 +94,27 @@
     _scPriority.userInteractionEnabled = editing;
     _scStatus.userInteractionEnabled = editing;
     _dpDueDate.userInteractionEnabled = editing;
+    
+    self.navigationController.interactivePopGestureRecognizer.enabled = !editing;
+    
+    if (_editing) {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Discard" style:(UIBarButtonItemStylePlain) target:self action:@selector(onDiscard)];
+        self.navigationItem.leftBarButtonItem.tintColor = [UIColor systemRedColor];
+    } else {
+        self.navigationItem.leftBarButtonItem = nil;
+    }
+}
+
+- (void)onDiscard {
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Discard changes?" message:@"All unsaved changes will be lost." preferredStyle:(UIAlertControllerStyleAlert)];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {}]];
+    
+     [alert addAction:[UIAlertAction actionWithTitle:@"Discard" style:(UIAlertActionStyleDestructive) handler:^(UIAlertAction * _Nonnull action) {
+         [self.navigationController popViewControllerAnimated:YES];
+    }]];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {

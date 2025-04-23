@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AllTasksViewController : UIViewController <UISearchBarDelegate, TaskDetailViewControllerDelegate, TasksTableManagerDelegate>
+@interface PendingTasksViewController : UIViewController <UISearchBarDelegate, TaskDetailViewControllerDelegate, TasksTableManagerDelegate>
 
 @end
 

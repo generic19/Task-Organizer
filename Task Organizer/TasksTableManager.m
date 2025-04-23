@@ -110,32 +110,37 @@
     for (int i = 0; i < tasks.count; i++) {
         Task* task = tasks[i];
         if (task.status & _statusFilter) {
-            if (_titleFilter == nil || _titleFilter.length == 0 || [task.title containsString:_titleFilter]) {
+            if (_titleFilter == nil || _titleFilter.length == 0 || [task.title localizedCaseInsensitiveContainsString:_titleFilter]) {
                 [tasksToDisplay addObject:task];
             }
         }
     }
     
     NSSortDescriptor* sortDescriptor;
+    NSSortDescriptor* secondarySortDescriptor;
     switch (_sorting) {
         case SortByCreationDate:
-            sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES selector:@selector(timeIntervalSinceReferenceDate)];
+            sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO selector:@selector(timeIntervalSinceReferenceDate)];
+            secondarySortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
             break;
             
         case SortByDueDate:
-            sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"dueDate" ascending:YES selector:@selector(timeIntervalSinceReferenceDate)];
+            sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"dueDate" ascending:NO selector:@selector(timeIntervalSinceReferenceDate)];
+            secondarySortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
             break;
             
         case SortByTitle:
             sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
+            secondarySortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO selector:@selector(timeIntervalSinceReferenceDate)];
             break;
             
         case SortByPriority:
             sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:NO];
+            secondarySortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"dueDate" ascending:NO selector:@selector(timeIntervalSinceReferenceDate)];
             break;
     }
     
-    [tasksToDisplay sortUsingDescriptors:@[sortDescriptor]];
+    [tasksToDisplay sortUsingDescriptors:@[sortDescriptor, secondarySortDescriptor]];
     
     if (_groupByPriority) {
         sections = [NSMutableArray arrayWithArray:@[@"High Priority", @"Normal Priority", @"Low Priority"]];
