@@ -13,19 +13,21 @@
 
 @end
 
+TasksRepository* instance;
+
 @implementation TasksRepository {
     NSUserDefaults* defaults;
 }
 
-+ (nonnull instancetype)repositoryWithUserDefaults:(nonnull NSUserDefaults *)userDefaults {
-    TasksRepository* repo = [[TasksRepository alloc] init];
-    
-    if (repo != nil) {
-        repo->defaults = userDefaults;
-        [repo loadTasks];
++ (nonnull instancetype)instance {
+    if (instance == nil) {
+        instance = [[TasksRepository alloc] init];
+        
+        instance->defaults = [NSUserDefaults standardUserDefaults];
+        [instance loadTasks];
     }
     
-    return repo;
+    return instance;
 }
 
 - (void)loadTasks {

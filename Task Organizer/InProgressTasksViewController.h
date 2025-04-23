@@ -6,10 +6,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TaskDetailViewController.h"
+#import "TasksTableManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface InProgressTasksViewController : UIViewController
+@interface InProgressTasksViewController : UIViewController <TaskDetailViewControllerDelegate, TasksTableManagerDelegate>
 
 @end
 

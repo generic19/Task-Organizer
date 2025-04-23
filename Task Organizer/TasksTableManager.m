@@ -129,6 +129,10 @@
         case SortByTitle:
             sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
             break;
+            
+        case SortByPriority:
+            sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:NO];
+            break;
     }
     
     [tasksToDisplay sortUsingDescriptors:@[sortDescriptor]];
@@ -219,8 +223,6 @@
 }
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Task* task = tasksBySection[indexPath.section][indexPath.row];
-    
     UIContextualAction* deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         [self removeTaskAtIndexPath:indexPath];
     }];

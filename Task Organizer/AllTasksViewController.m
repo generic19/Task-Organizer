@@ -23,11 +23,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    repository = [TasksRepository repositoryWithUserDefaults:[NSUserDefaults standardUserDefaults]];
+    repository = [TasksRepository instance];
     
-    tableManager = [TasksTableManager managerForDelegate:self tableView:_tableView repository:repository groupByPriority:YES sorting:SortByCreationDate statusFilter:STATUS_ALL];
-    
-    [tableManager reload];
+    tableManager = [TasksTableManager managerForDelegate:self tableView:_tableView repository:repository groupByPriority:YES sorting:SortByDueDate statusFilter:STATUS_ALL];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
@@ -40,6 +38,8 @@
     self.tabBarController.navigationItem.title = @"All Tasks";
     
     self.tabBarController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"square.and.pencil"] style:UIBarButtonItemStylePlain target:self action:@selector(newTaskAction)];
+    
+    [tableManager reload];
 }
 
 - (void)newTaskAction {

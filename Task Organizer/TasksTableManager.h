@@ -14,6 +14,7 @@ enum Sorting {
     SortByCreationDate,
     SortByDueDate,
     SortByTitle,
+    SortByPriority,
 };
 
 static const int STATUS_ALL = StatusPending | StatusInProgress | StatusCompleted;

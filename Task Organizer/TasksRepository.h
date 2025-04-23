@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TasksRepository : NSObject
 
-+ (instancetype)repositoryWithUserDefaults:(NSUserDefaults*)userDefaults;
++ (instancetype)instance;
 
 @property (readonly) NSArray<Task*>* tasks;
 

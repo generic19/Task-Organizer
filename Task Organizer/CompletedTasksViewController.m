@@ -6,22 +6,57 @@
 //
 
 #import "CompletedTasksViewController.h"
+#import "TasksRepository.h"
 
 @interface CompletedTasksViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
-@implementation CompletedTasksViewController
+@implementation CompletedTasksViewController {
+    TasksRepository* repository;
+    TasksTableManager* tableManager;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tabBarController.navigationItem.title = @"Completed Tasks";
+    
+    repository = [TasksRepository instance];
+    
+    tableManager = [TasksTableManager managerForDelegate:self tableView:_tableView repository:repository groupByPriority:NO sorting:SortByCreationDate statusFilter:StatusCompleted];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.tabBarController.navigationItem.title = @"Completed Tasks";
+    
+    self.tabBarController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"square.and.pencil"] style:UIBarButtonItemStylePlain target:self action:@selector(newTaskAction)];
+    
+    [tableManager reload];
+}
+
+- (void)saveTask:(nonnull Task *)task replacing:(Task * _Nullable)oldTask {
+    if (oldTask != nil) {
+        [repository replaceTask:oldTask with:task];
+    } else {
+        [repository addTask:task];
+    }
+    
+    [tableManager reload];
+}
+
+- (void)tableManagerOnSelectTask:(nonnull Task *)task {
+    TaskDetailViewController* controller = [self.storyboard instantiateViewControllerWithIdentifier:@"taskDetail"];
+    controller.delegate = self;
+    controller.task = task;
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+- (void)newTaskAction {
+    TaskDetailViewController* controller = [self.storyboard instantiateViewControllerWithIdentifier:@"taskDetail"];
+    controller.delegate = self;
+    controller.task = nil;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 @end
