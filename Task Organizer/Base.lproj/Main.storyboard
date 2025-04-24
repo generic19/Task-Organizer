@@ -154,6 +154,12 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remind me when task is due" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N8E-1b-xRu">
+                                <rect key="frame" x="24" y="699" width="288" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Priority" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="65" translatesAutoresizingMaskIntoConstraints="NO" id="nWX-4h-Mfp">
                                 <rect key="frame" x="24" y="324" width="60" height="21"/>
                                 <constraints>
@@ -177,6 +183,9 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="DMd-1f-2Ew">
+                                <rect key="frame" x="320" y="694" width="51" height="31"/>
+                            </switch>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="0ue-Cw-q8J"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -185,12 +194,16 @@
                             <constraint firstItem="0ue-Cw-q8J" firstAttribute="trailing" secondItem="22C-Z3-lnl" secondAttribute="trailing" constant="24" id="1FE-cH-4vb"/>
                             <constraint firstItem="Rt2-zM-xC8" firstAttribute="top" secondItem="nfT-3x-T36" secondAttribute="bottom" constant="16" id="6Hh-jx-4di"/>
                             <constraint firstItem="JVb-Lr-Pj7" firstAttribute="leading" secondItem="0ue-Cw-q8J" secondAttribute="leading" constant="24" id="9H6-lc-L2x"/>
+                            <constraint firstItem="0ue-Cw-q8J" firstAttribute="trailing" secondItem="DMd-1f-2Ew" secondAttribute="trailing" constant="24" id="AU5-3l-3gR"/>
                             <constraint firstItem="0ue-Cw-q8J" firstAttribute="trailing" secondItem="Rt2-zM-xC8" secondAttribute="trailing" constant="24" id="C5f-gA-JwV"/>
+                            <constraint firstItem="DMd-1f-2Ew" firstAttribute="leading" secondItem="N8E-1b-xRu" secondAttribute="trailing" constant="8" id="CsX-5m-fDG"/>
                             <constraint firstItem="JVb-Lr-Pj7" firstAttribute="width" secondItem="nWX-4h-Mfp" secondAttribute="width" id="ElC-Qj-5fG"/>
                             <constraint firstItem="U8C-fJ-cZr" firstAttribute="leading" secondItem="JVb-Lr-Pj7" secondAttribute="trailing" constant="24" id="Ftc-qM-29W"/>
                             <constraint firstItem="U8C-fJ-cZr" firstAttribute="centerY" secondItem="JVb-Lr-Pj7" secondAttribute="centerY" id="JSM-lK-s3E"/>
                             <constraint firstItem="JVb-Lr-Pj7" firstAttribute="top" secondItem="nWX-4h-Mfp" secondAttribute="bottom" constant="24" id="N0u-Dg-6u6"/>
                             <constraint firstItem="nWX-4h-Mfp" firstAttribute="leading" secondItem="0ue-Cw-q8J" secondAttribute="leading" constant="24" id="OvO-xy-t0p"/>
+                            <constraint firstItem="N8E-1b-xRu" firstAttribute="top" secondItem="aQc-CB-O4b" secondAttribute="bottom" constant="16" id="SKf-Bh-G5K"/>
+                            <constraint firstItem="DMd-1f-2Ew" firstAttribute="centerY" secondItem="N8E-1b-xRu" secondAttribute="centerY" id="X1b-V6-k0D"/>
                             <constraint firstItem="0ue-Cw-q8J" firstAttribute="trailing" secondItem="6zY-Ox-9re" secondAttribute="trailing" constant="24" id="Xwf-kW-mfg"/>
                             <constraint firstItem="6zY-Ox-9re" firstAttribute="centerY" secondItem="nWX-4h-Mfp" secondAttribute="centerY" id="azV-a4-v8c"/>
                             <constraint firstItem="0ue-Cw-q8J" firstAttribute="trailing" secondItem="xft-HG-UzV" secondAttribute="trailing" constant="24" id="b30-oe-KyD"/>
@@ -208,6 +221,7 @@
                             <constraint firstItem="xft-HG-UzV" firstAttribute="leading" secondItem="0ue-Cw-q8J" secondAttribute="leading" constant="24" id="sQR-Wx-NcK"/>
                             <constraint firstItem="0ue-Cw-q8J" firstAttribute="trailing" secondItem="U8C-fJ-cZr" secondAttribute="trailing" constant="24" id="t6C-C7-tgG"/>
                             <constraint firstItem="nWX-4h-Mfp" firstAttribute="top" secondItem="22C-Z3-lnl" secondAttribute="bottom" constant="48" id="ta9-PR-HjD"/>
+                            <constraint firstItem="N8E-1b-xRu" firstAttribute="leading" secondItem="0ue-Cw-q8J" secondAttribute="leading" constant="24" id="vQj-GB-No8"/>
                             <constraint firstItem="nfT-3x-T36" firstAttribute="leading" secondItem="0ue-Cw-q8J" secondAttribute="leading" constant="24" id="wdv-ct-ivN"/>
                             <constraint firstItem="MJm-ei-SGL" firstAttribute="leading" secondItem="0ue-Cw-q8J" secondAttribute="leading" constant="24" id="wuL-cv-aPc"/>
                         </constraints>
@@ -226,6 +240,7 @@
                         <outlet property="dpDueDate" destination="aQc-CB-O4b" id="xPA-wD-Phv"/>
                         <outlet property="scPriority" destination="6zY-Ox-9re" id="y5r-rK-l2T"/>
                         <outlet property="scStatus" destination="U8C-fJ-cZr" id="hxH-wl-fWQ"/>
+                        <outlet property="swRemind" destination="DMd-1f-2Ew" id="mbL-0o-gDT"/>
                         <outlet property="tfDescription" destination="22C-Z3-lnl" id="peR-ZF-c1o"/>
                         <outlet property="tfTitle" destination="nfT-3x-T36" id="eTR-pq-evG"/>
                     </connections>
@@ -413,6 +428,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="8Ne-2H-xeX"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="BzI-qU-0an">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>

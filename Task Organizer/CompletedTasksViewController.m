@@ -30,7 +30,13 @@
     [super viewWillAppear:animated];
     self.tabBarController.navigationItem.title = @"Completed Tasks";
     
-    self.tabBarController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"square.and.pencil"] style:UIBarButtonItemStylePlain target:self action:@selector(newTaskAction)];
+    UIBarButtonItem* newAction = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"square.and.pencil"] style:UIBarButtonItemStylePlain target:self action:@selector(newTaskAction)];
+    
+    UIBarButtonItem* groupAction = [[UIBarButtonItem alloc] initWithImage:nil style:UIBarButtonItemStylePlain target:self action:@selector(toggleGroupingAction)];
+    
+    groupAction.image = [UIImage systemImageNamed:tableManager.groupByPriority ? @"folder.circle.fill" : @"folder.circle"];
+    
+    self.tabBarController.navigationItem.rightBarButtonItems = @[newAction, groupAction];
     
     [tableManager reload];
 }
@@ -57,6 +63,14 @@
     controller.delegate = self;
     controller.task = nil;
     [self.navigationController pushViewController:controller animated:YES];
+}
+
+- (void)toggleGroupingAction {
+    tableManager.groupByPriority = !tableManager.groupByPriority;
+    
+    self.tabBarController.navigationItem.rightBarButtonItems[1].image = [UIImage systemImageNamed:tableManager.groupByPriority ? @"folder.circle.fill" : @"folder.circle"];
+    
+    [tableManager reload];
 }
 
 @end

@@ -29,12 +29,13 @@ enum Priority {
 @property (readonly) NSDate* dueDate;
 @property (readonly) enum Status status;
 @property (readonly) enum Priority priority;
+@property (readonly) NSString* notificationIdentifier;
 
 @property (class, readonly) BOOL supportsSecureCoding;
 
-+ (instancetype)taskWithTitle:(NSString*)title content:(NSString*)content dueDate:(NSDate*)dueDate status:(enum Status)status priority:(enum Priority)priority;
++ (instancetype)taskWithTitle:(NSString*)title content:(NSString*)content dueDate:(NSDate*)dueDate status:(enum Status)status priority:(enum Priority)priority notificationIdentifier:(NSString* _Nullable)notificationIdentifier;
 
-- (instancetype)copyWithTitle:(NSString* _Nullable)title content:(NSString* _Nullable)content dueDate:(NSDate* _Nullable)dueDate status:(enum Status)status priority:(enum Priority)priority;
+- (instancetype)copyWithTitle:(NSString* _Nullable)title content:(NSString* _Nullable)content dueDate:(NSDate* _Nullable)dueDate status:(enum Status)status priority:(enum Priority)priority notificationIdentifier:(NSString* _Nullable)notificationIdentifier setNotificationIdentifier:(BOOL)setNotificationIdentifier;
 
 - (instancetype)copyWithStatus:(enum Status)status;
 

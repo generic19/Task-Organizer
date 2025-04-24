@@ -59,30 +59,19 @@
     
     cell.tfDate.text = [NSString stringWithFormat:@"Due %@", formattedDate];
     
-    switch (task.status) {
-        case StatusPending:
-            cell.ivIcon.image = [UIImage systemImageNamed:@"tray.fill"];
-            break;
-            
-        case StatusInProgress:
-            cell.ivIcon.image = [UIImage systemImageNamed:@"hourglass"];
-            break;
-            
-        case StatusCompleted:
-            cell.ivIcon.image = [UIImage systemImageNamed:@"flag.pattern.checkered"];
-            break;
-    }
-    
     switch (task.priority) {
         case PriorityHigh:
+            cell.ivIcon.image = [UIImage systemImageNamed:@"exclamationmark.3"];
             cell.ivIcon.tintColor = [UIColor systemOrangeColor];
             break;
             
         case PriorityNormal:
+            cell.ivIcon.image = [UIImage systemImageNamed:@"exclamationmark.2"];
             cell.ivIcon.tintColor = [UIColor systemBlueColor];
             break;
             
         case PriorityLow:
+            cell.ivIcon.image = [UIImage systemImageNamed:@"exclamationmark"];
             cell.ivIcon.tintColor = [UIColor systemGrayColor];
         default:
             break;
@@ -222,6 +211,26 @@
     }
 }
 
+- (void)changeTaskStatusAtIndexPath:(NSIndexPath*)indexPath to:(enum Status)status {
+    Task* task = tasksBySection[indexPath.section][indexPath.row];
+    
+    if (task.status == status) {
+        return;
+    }
+    
+    [tasksRepository replaceTask:task with:[task copyWithStatus:status]];
+    [tasksBySection[indexPath.section] removeObjectAtIndex:indexPath.row];
+    
+    if (tasksBySection[indexPath.section].count == 0) {
+        [sections removeObjectAtIndex:indexPath.section];
+        [tasksBySection removeObjectAtIndex:indexPath.section];
+        
+        [tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
+    } else {
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
+    }
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [_delegate tableManagerOnSelectTask:tasksBySection[indexPath.section][indexPath.row]];
@@ -235,6 +244,43 @@
     deleteAction.image = [UIImage systemImageNamed:@"trash"];
     
     return [UISwipeActionsConfiguration configurationWithActions:@[deleteAction]];
+}
+
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView leadingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+    Task* task = tasksBySection[indexPath.section][indexPath.row];
+    
+    NSString* actionName;
+    UIImage* actionImage;
+    UIColor* actionColor;
+    enum Status nextStatus;
+    switch (task.status) {
+        case StatusPending:
+            actionName = @"Mark In-Progress";
+            actionImage = [UIImage systemImageNamed:@"hourglass"];
+            actionColor = [UIColor systemBlueColor];
+            nextStatus = StatusInProgress;
+            break;
+            
+        case StatusInProgress:
+            actionName = @"Mark Completed";
+            actionImage = [UIImage systemImageNamed:@"flag.pattern.checkered"];
+            actionColor = [UIColor systemGreenColor];
+            nextStatus = StatusCompleted;
+            break;
+            
+        default:
+            return nil;
+    }
+    
+    UIContextualAction* statusAction = [UIContextualAction contextualActionWithStyle:(UIContextualActionStyleNormal) title:actionName handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        [self changeTaskStatusAtIndexPath:indexPath to:nextStatus];
+        completionHandler(YES);
+    }];
+    
+    statusAction.image = actionImage;
+    statusAction.backgroundColor = actionColor;
+    
+    return [UISwipeActionsConfiguration configurationWithActions:@[statusAction]];
 }
 
 @end

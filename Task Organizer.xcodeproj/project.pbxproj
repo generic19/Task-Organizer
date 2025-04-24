@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		FB4FBCA82DBA04E400E94A87 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB4FBCA72DBA04E400E94A87 /* UserNotifications.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		FB4FBBF02DB8CE6300E94A87 /* Task Organizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Task Organizer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB4FBCA72DBA04E400E94A87 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -36,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB4FBCA82DBA04E400E94A87 /* UserNotifications.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,6 +52,7 @@
 			isa = PBXGroup;
 			children = (
 				FB4FBBF22DB8CE6300E94A87 /* Task Organizer */,
+				FB4FBCA62DBA04E400E94A87 /* Frameworks */,
 				FB4FBBF12DB8CE6300E94A87 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,6 +63,14 @@
 				FB4FBBF02DB8CE6300E94A87 /* Task Organizer.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		FB4FBCA62DBA04E400E94A87 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FB4FBCA72DBA04E400E94A87 /* UserNotifications.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
